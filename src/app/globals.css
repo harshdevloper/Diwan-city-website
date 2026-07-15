@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme {
+  /* Dark green — the brand's anchor */
+  --color-forest-50: #f0f7f4;
+  --color-forest-100: #d9ece4;
+  --color-forest-200: #b3d9c9;
+  --color-forest-300: #7fbca5;
+  --color-forest-400: #4a9880;
+  --color-forest-500: #2b7a62;
+  --color-forest-600: #1c5f4c;
+  --color-forest-700: #144a3a;
+  --color-forest-800: #0e3529;
+  --color-forest-900: #0a2820;
+  --color-forest-950: #051813;
+
+  /* Gold — accent only, never body text */
+  --color-gold-100: #f7eecf;
+  --color-gold-200: #efdca2;
+  --color-gold-300: #e3c87a;
+  --color-gold-400: #d4b25c;
+  --color-gold-500: #c8a44d;
+  --color-gold-600: #a8863a;
+  --color-gold-700: #86682c;
+
+  /* Warm neutrals */
+  --color-ivory: #faf8f4;
+  --color-sand: #f3efe7;
+
+  --font-display: var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-hindi: var(--font-devanagari), "Noto Sans Devanagari", sans-serif;
+
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Keep anchored sections clear of the fixed navbar */
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    color: var(--color-forest-900);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: var(--color-gold-300);
+    color: var(--color-forest-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-500);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism — two tints, since the site alternates light and dark sections */
+  .glass-light {
+    background-color: color-mix(in oklab, white 62%, transparent);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid color-mix(in oklab, white 70%, transparent);
+    box-shadow: 0 8px 32px -8px rgb(10 40 32 / 0.14);
+  }
+
+  .glass-dark {
+    background-color: color-mix(in oklab, var(--color-forest-900) 42%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid color-mix(in oklab, var(--color-gold-300) 22%, transparent);
+    box-shadow: 0 8px 32px -8px rgb(5 24 19 / 0.5);
+  }
+
+  .text-gold-gradient {
+    background: linear-gradient(
+      100deg,
+      var(--color-gold-600) 0%,
+      var(--color-gold-300) 42%,
+      var(--color-gold-100) 52%,
+      var(--color-gold-300) 62%,
+      var(--color-gold-600) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* background-clip:text crops to the box, which cuts the overhang on italic
+       display type. Widen the box, then pull the extra width back out of flow. */
+    padding-inline-end: 0.12em;
+    margin-inline-end: -0.12em;
+  }
+
+  .hairline-gold {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--color-gold-500) 60%, transparent),
+      transparent
+    );
+  }
+}
